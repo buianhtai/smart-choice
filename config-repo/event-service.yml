@@ -1,0 +1,33 @@
+server.port: 7002
+server.error.include-message: always
+
+logging:
+  level:
+    root: INFO
+    se.magnus: DEBUG
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+
+---
+spring.profiles: docker
+spring.cloud.stream.defaultBinder: kafka
+spring.zipkin.sender.type: kafka
+spring.kafka.bootstrap-servers: kafka:29092
+
+server.port: 80
+spring:
+  application.name: event-service
+  kafka:
+    producer:
+      bootstrap-servers: kafka:29092
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+  cloud:
+    function.definition: eventHandler
+    stream:
+      bindings:
+        eventHandler-in-0.destination: audit
+        eventHandler-in-0.group: auditGroup
+      default-binder: kafka
+      kafka:
+        binder:
+          replicationFactor: 1
+          brokers: kafka:29092

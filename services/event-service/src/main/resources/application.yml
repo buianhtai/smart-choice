@@ -1,0 +1,39 @@
+#app:
+#  audit-service:
+#    timeoutSec: 2
+#  auth-server: localhost:8080
+#api:
+#  common:
+#    version: 1.0.0
+#    title: Sample API
+#    description: Description of the API...
+#    termsOfServiceUrl: MINE TERMS OF SERVICE URL
+#    license: License
+#    licenseUrl: MY LICENSE URL
+#
+#    contact:
+#      name: Contact
+#      url: My
+#      email: me@mail.com
+#server:
+#  port: 7001
+#server.error.include-message: always
+#debug: true
+#
+#spring:
+#  application.name: event-service
+#  kafka:
+#    producer:
+#      bootstrap-servers: localhost:9092
+#      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+#  cloud:
+#    function.definition: eventHandler
+#    stream:
+#      bindings:
+#        eventHandler-in-0.destination: audit
+#      default-binder: kafka
+#      kafka:
+#        binder:
+#          brokers: 127.0.0.1
+#
+#

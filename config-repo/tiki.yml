@@ -1,0 +1,88 @@
+app:
+  product-service:
+    timeoutSec: 2
+  auth-server: localhost:8080
+api:
+  common:
+    version: 1.0.0
+    title: Sample API
+    description: Description of the API...
+    termsOfServiceUrl: MINE TERMS OF SERVICE URL
+    license: License
+    licenseUrl: MY LICENSE URL
+
+    contact:
+      name: Contact
+      url: My
+      email: me@mail.com
+server:
+  port: 8989
+server.error.include-message: always
+debug: true
+
+resilience4j.circuitbreaker:
+  backends:
+    product:
+      registerHealthIndicator: true
+      ringBufferSizeInClosedState: 5
+      failureRateThreshold: 50
+      waitInterval: 10000
+      ringBufferSizeInHalfOpenState: 3
+      automaticTransitionFromOpenToHalfOpenEnabled: true
+      ignoreExceptions:
+        - se.magnus.util.exceptions.InvalidInputException
+        - se.magnus.util.exceptions.NotFoundException
+resilience4j.retry:
+  backends:
+    product:
+      maxRetryAttempts: 3
+      waitDuration: 1000
+      retryExceptions:
+        - org.springframework.web.reactive.function.client.WebClientResponseException$InternalServerError
+spring:
+  application.name: product-composite
+  security.oauth2.resourceserver.jwt.jwk-set-uri: http://${app.auth-server}/.well-known/jwks.json
+  cloud.config:
+    failFast: true
+    retry:
+      initialInterval: 3000
+      multiplier: 1.3
+      maxInterval: 10000
+      maxAttempts: 20
+    uri: http://${CONFIG_SERVER_USR}:${CONFIG_SERVER_PWD}@${app.config-server}:8888
+  r2dbc:
+    username: sori
+    password: sori
+    pool:
+      initial-size: 10
+      max-idle-time: 30s
+      max-life-time: 30s
+      max-size: 10
+      enabled: true
+    url: r2dbc:postgresql://localhost:5432/tiki
+  flyway:
+    sql-migration-prefix: V
+    repeatable-sql-migration-prefix: R
+    sql-migration-separator: __
+    sql-migration-suffixes: .sql
+    enabled: false
+    user: sori
+    password: sori
+    url: jdbc:postgresql://localhost:5432/tiki
+    validate-on-migrate: false
+    baseline-on-migrate: true
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+---
+server.port: 80
+spring:
+  config:
+    activate:
+      on-profile: docker
+  application:
+    name: tiki
+
+

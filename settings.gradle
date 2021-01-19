@@ -1,0 +1,6 @@
+include ':common'
+include ':mock-services:tiki'
+include ':services:event-service'
+include ':services:product-composite-service'
+include ':spring-cloud:gateway'
+include ':spring-cloud:authorization-server'

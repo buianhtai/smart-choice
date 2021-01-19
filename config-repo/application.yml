@@ -1,0 +1,17 @@
+app:
+  auth-server: localhost
+
+spring.cloud.stream.kafka.binder:
+  brokers: 127.0.0.1
+  defaultBrokerPort: 9092
+
+# WARNING: Exposing all management endpoints over http should only be used during development, must be locked down in production!
+management.endpoint.health.show-details: "ALWAYS"
+management.endpoints.web.exposure.include: "*"
+
+---
+spring.profiles: docker
+spring.cloud.stream.kafka.binder.brokers: kafka
+
+app:
+  auth-server: auth-server
