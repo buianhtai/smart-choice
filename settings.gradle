@@ -1,5 +1,7 @@
 include ':common'
 include ':mock-services:tiki'
+include ':mock-services:shopee'
+include ':mock-services:lazada'
 include ':services:event-service'
 include ':services:product-composite-service'
 include ':spring-cloud:gateway'
