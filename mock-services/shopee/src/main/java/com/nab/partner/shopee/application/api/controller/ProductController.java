@@ -1,7 +1,7 @@
 package com.nab.partner.shopee.application.api.controller;
 
 import com.github.javafaker.Faker;
-import com.nab.domain.ShoppeProduct;
+import com.nab.domain.external.ShoppeProduct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 @RestController
-@RequestMapping("/api/v1/products")
+@RequestMapping("/products")
 @RequiredArgsConstructor
 @Slf4j
 public class ProductController {

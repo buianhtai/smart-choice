@@ -1,0 +1,38 @@
+= OAuth 2.0 Authorization Server Sample
+
+This sample demonstrates an Authorization Server that supports a simple, static JWK Set.
+
+It's useful for working with the other samples in the library that want to point to an Authorization Server.
+
+== 1. Running the server
+
+To run the server, do:
+
+```bash
+./gradlew bootRun
+```
+
+Or import the project into your IDE and run `OAuth2AuthorizationServerApplication` from there.
+
+Once it is up, this request asks for a token with the "product:read" scope:
+
+```bash
+curl -k https://writer:secret@localhost:8443/oauth/token -d grant_type=password -d username=customer -d password=password -s | jq .
+```
+
+Which will respond with something like:
+
+```{
+  "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjdXN0b21lciIsImV4cCI6MjIxMTIxODA2MSwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImp0aSI6IldkLzVjTFo0NlFyUUtDUDhoQzl1T1BSbXV5OD0iLCJjbGllbnRfaWQiOiJ3cml0ZXIiLCJzY29wZSI6WyJwcm9kdWN0OnJlYWQiLCJwcm9kdWN0OndyaXRlIl19.GxuVD0ZRL15n9lyZKRIf-npfR-c2JVYaOJ6BaEKF4h3Nmr2aZJAgnPbYCHzoelWNCcfS4T0Z54i_VPPRHtRDrMEaIdIOi9Bv4sLbYbpEHtcom4XRg_0XHqwlLqbxa4-sjX_eXntFHLL46K05jttifEpJrWmG5Fk5ZKIMKPZmvXbLC-T1wsYSbBKCMmpUv2fUCsy_yTGnmFrwGeeGC_5MuniZm3dfjRvvz19doe2XYjkf5jV3KU_4jnacNE-8N-L40gWKlXwUEakAIFdeVAFWp58KJ2soekdebTQeO1GDzb0rahtw53H2Ib_Znd2Z36Tujz-E_uhd2ztwFNo3JqJUiQ",
+  "token_type": "bearer",
+  "expires_in": 599999999,
+  "scope": "product:read product:write",
+  "jti": "Wd/5cLZ46QrQKCP8hC9uOPRmuy8="
+}
+```
+
+User noscope will get error 403 forbitde
+
+```bash
+curl -k https://noscopes:secret@localhost:8443/oauth/token -d grant_type=password -d username=customer -d password=password -s | jq .
+```

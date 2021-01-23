@@ -221,7 +221,7 @@ class IntrospectEndpoint {
 		attributes.put("active", true);
 		attributes.put("exp", accessToken.getExpiration().getTime());
 		attributes.put("scope", accessToken.getScope().stream().collect(Collectors.joining(" ")));
-		attributes.put("sub", authentication.getName());
+		attributes.put("username", authentication.getName());
 
 		return attributes;
 	}

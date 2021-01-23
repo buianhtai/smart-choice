@@ -15,14 +15,15 @@ spring:
 app:
   auth-server: auth-server
   clients:
-    TIKI: tiki/api/v1/products
-    LAZADA: lazada/api/v1/products
-    SHOPEE: shopee/api/v1/products
+    TIKI: tiki/products
+    LAZADA: lazada/products
+    SHOPEE: shopee/products
 
 spring.security.oauth2.resourceserver.jwt.jwk-set-uri: http://${app.auth-server}/.well-known/jwks.json
 
-#logging:
-#  level:
-#    root: INFO
-#    org.springframework.web.server.adapter.HttpWebHandlerAdapter: WARN
+logging:
+  level:
+    root: INFO
+    com.ecom: DEBUG
+    org.springframework.web.server.adapter.HttpWebHandlerAdapter: TRACE
 

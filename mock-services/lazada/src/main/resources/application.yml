@@ -1,5 +1,5 @@
 #app:
-#  product-service:
+#  product-repository:
 #    timeoutSec: 2
 #  auth-server: localhost:8080
 #api:

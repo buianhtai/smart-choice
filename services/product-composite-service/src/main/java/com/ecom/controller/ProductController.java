@@ -1,75 +1,67 @@
 package com.ecom.controller;
 
 
-import com.ecom.integration.client.PartnerClient;
-import com.nab.domain.AuditInfo;
-import com.nab.domain.Product;
-import com.nab.domain.SearchRequest;
-import com.nab.domain.Sort;
-import java.util.Comparator;
-import java.util.List;
+import com.ecom.config.Constants;
+import com.ecom.config.security.Permissions;
+import com.ecom.config.security.UserPrincipal;
+import com.nab.domain.product.model.ProductAggregate;
+import com.nab.domain.product.repository.IProductAggregateRepository;
+import com.nab.event.SearchEvent;
+import com.nab.filter.ProductFilter;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.reactive.ReactiveKafkaProducerTemplate;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.ReactiveSecurityContextHolder;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Flux;
-import reactor.core.scheduler.Schedulers;
+import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/api/v1/products")
+@RequestMapping(Constants.PRODUCT_URL)
 @RequiredArgsConstructor
 @Slf4j
 public class ProductController {
 
-    private final List<PartnerClient> clients;
     private final ReactiveKafkaProducerTemplate kafkaTemplate;
+
+    private final IProductAggregateRepository repository;
 
     @Value("${app.events.topic}")
     private String eventTopic;
 
     @GetMapping
-    public Flux<Product> getProducts(SearchRequest request) {
-        return Flux.fromIterable(clients)
-            .flatMap(
-                client -> client
-                    .execute(null, request)
-                    .onErrorResume(throwable -> Flux.empty())
-                    .subscribeOn(Schedulers.boundedElastic())
-            )
-            .sort(sortOrder(request.getSort()))
-            .doOnComplete(
-                () -> {
-                    AuditInfo event = AuditInfo.builder().userName("admin")
-                        .query(request.getQuery())
-                        .build();
-                    log.debug("Send event search to kafka topic {} - Event {} ", eventTopic, event);
+    public Mono<ProductAggregate> getProducts(ProductFilter request) {
+        return
+            ReactiveSecurityContextHolder.getContext().map(e->e.getAuthentication().getName())
+                .zipWith(
+                    repository.getAggregate(request),
+                    (a, p) -> {
+                        log.info("Authentication: UserName {} ", a);
 
-                    kafkaTemplate.send(eventTopic, event)
-                        .subscribeOn(Schedulers.boundedElastic())
-                        .subscribe();
-                }
-            );
+                        SearchEvent event = SearchEvent.builder()
+                            .eventId(UUID.randomUUID())
+                            .userName(a)
+                            .query(request.getQuery())
+                            .build();
+
+                        log.debug("Send event search to kafka topic {} - Event {} ", eventTopic,
+                            event);
+
+                        kafkaTemplate.send(eventTopic, event)
+                            .subscribe();
+                        return p;
+                    });
     }
 
-
-    Comparator<Product> sortByPrice() {
-        return Comparator.comparing(Product::getPrice);
+    @GetMapping("/current-user")
+    public Mono<Authentication> getCurrentUser() {
+        return ReactiveSecurityContextHolder.getContext()
+            .map(SecurityContext::getAuthentication);
     }
 
-    Comparator<Product> sortOrder(Sort sort) {
-        if (sort == null) {
-            return sortByPrice();
-        }
-        log.debug("Sort received {}", sort);
-        switch (sort) {
-            case DECS:
-                return sortByPrice().reversed();
-            default:
-                return sortByPrice();
-        }
-
-    }
 }

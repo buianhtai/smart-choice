@@ -1,5 +1,5 @@
 #app:
-#  audit-service:
+#  audit-repository:
 #    timeoutSec: 2
 #  auth-server: localhost:8080
 #api:
@@ -21,7 +21,7 @@
 #debug: true
 #
 #spring:
-#  application.name: event-service
+#  application.name: event-repository
 #  kafka:
 #    producer:
 #      bootstrap-servers: localhost:9092

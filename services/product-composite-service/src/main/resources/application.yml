@@ -45,7 +45,7 @@
 #        # Normal response
 #        Entities for product information, recommendations and reviews related to the specificed productId will be deleted.
 #        The implementation of the delete method is idempotent, i.e. it can be called several times with the same response.
-#        This means that a delete request of a non existing product will return <b>200 Ok</b>.
+#        This means that a delete filter of a non existing product will return <b>200 Ok</b>.
 #
 #server.port: 7000
 #server.error.include-message: always
@@ -64,7 +64,7 @@
 #            brokers: 127.0.0.1
 #
 #app:
-#  product-service:
+#  product-repository:
 #    timeoutSec: 2
 #  auth-server: localhost:8080
 #  clients:
@@ -102,7 +102,7 @@
 #app:
 #  eureka-server: eureka
 #  auth-server: auth-server
-#  product-service:
+#  product-repository:
 #    timeoutSec: 2
 #  clients:
 #    TIKI: tiki

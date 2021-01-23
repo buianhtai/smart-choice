@@ -1,7 +1,7 @@
 package com.nab.partner.lazada.application.api.controller;
 
 import com.github.javafaker.Faker;
-import com.nab.domain.LazadaProduct;
+import com.nab.domain.external.LazadaProduct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 @RestController
-@RequestMapping("/api/v1/products")
+@RequestMapping("/products")
 @RequiredArgsConstructor
 @Slf4j
 public class ProductController {

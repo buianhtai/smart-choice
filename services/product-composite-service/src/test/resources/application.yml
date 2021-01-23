@@ -1,16 +1,18 @@
-api:
 
-  common:
-    version:
-    title:
-    description:
-    termsOfServiceUrl:
-    license:
-    licenseUrl:
 
-    contact:
-      name:
-      url:
-      email:
+app:
+  auth-server: auth-server
+  events:
+    topic: event
+  retry:
+    max-times: 2
+    max-duration: 5s
+  clients:
+    TIKI: tiki/products
+    LAZADA: lazada/products
+    SHOPEE: shopee/products
+spring:
+  main:
+    allow-bean-definition-overriding: true
+spring.security.oauth2.resourceserver.jwt.jwk-set-uri: http://${app.auth-server}/.well-known/jwks.json
 
-app.product-service.timeoutSec: 2

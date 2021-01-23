@@ -17,3 +17,9 @@ app:
   retry:
     max-times: 2
     max-duration: 5s
+
+logging:
+  level:
+    root: INFO
+    com.ecom: DEBUG
+    org.springframework.web.server.adapter.HttpWebHandlerAdapter: TRACE

@@ -5,7 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import reactor.core.publisher.Hooks;
 
 @SpringBootApplication(scanBasePackages = {
-    "com.ecom"
+    "com.ecom",
+    "com.nab"
 })
 public class ProductCompositeServiceApplication {
 

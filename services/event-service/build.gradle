@@ -4,7 +4,7 @@ plugins {
 	id 'java'
 }
 
-group = 'com.nab.microservices.smart-choice.event-service'
+group = 'com.nab.microservices.smart-choice.event-repository'
 version = '1.0.0-SNAPSHOT'
 sourceCompatibility = '1.8'
 

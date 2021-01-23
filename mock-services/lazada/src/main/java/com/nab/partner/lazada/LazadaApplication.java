@@ -1,4 +1,4 @@
-package com.nab.partner.tiki;
+package com.nab.partner.lazada;
 
 import com.github.javafaker.Faker;
 import java.util.Locale;
