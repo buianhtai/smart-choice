@@ -1,0 +1,93 @@
+= Components structures
+
+- Common :
+- Mock-services
+- Services
+- Spring Cloud
+== 1. Running the server
+
+To run the server, do:
+
+```bash
+./gradlew bootRun
+```
+
+Or import the project into your IDE and run `OAuth2AuthorizationServerApplication` from there.
+
+Once it is up, this request asks for a token with the "product:read" scope:
+
+```bash
+curl -k https://writer:secret@localhost:8443/oauth/token -d grant_type=password -d username=customer -d password=password -s | jq .
+```
+
+Which will respond with something like:
+
+```{
+  "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjdXN0b21lciIsImV4cCI6MjIxMTIxODA2MSwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImp0aSI6IldkLzVjTFo0NlFyUUtDUDhoQzl1T1BSbXV5OD0iLCJjbGllbnRfaWQiOiJ3cml0ZXIiLCJzY29wZSI6WyJwcm9kdWN0OnJlYWQiLCJwcm9kdWN0OndyaXRlIl19.GxuVD0ZRL15n9lyZKRIf-npfR-c2JVYaOJ6BaEKF4h3Nmr2aZJAgnPbYCHzoelWNCcfS4T0Z54i_VPPRHtRDrMEaIdIOi9Bv4sLbYbpEHtcom4XRg_0XHqwlLqbxa4-sjX_eXntFHLL46K05jttifEpJrWmG5Fk5ZKIMKPZmvXbLC-T1wsYSbBKCMmpUv2fUCsy_yTGnmFrwGeeGC_5MuniZm3dfjRvvz19doe2XYjkf5jV3KU_4jnacNE-8N-L40gWKlXwUEakAIFdeVAFWp58KJ2soekdebTQeO1GDzb0rahtw53H2Ib_Znd2Z36Tujz-E_uhd2ztwFNo3JqJUiQ",
+  "token_type": "bearer",
+  "expires_in": 599999999,
+  "scope": "product:read product:write",
+  "jti": "Wd/5cLZ46QrQKCP8hC9uOPRmuy8="
+}
+```
+
+User noscope will get error 403 forbitde
+
+```bash
+curl -k https://noscopes:secret@localhost:8443/oauth/token -d grant_type=password -d username=customer -d password=password -s | jq .
+```
+
+```bash
+curl --location --request GET 'https://localhost:8443/api/v1/products?query=iphone%20XS%20MAX&sort=ASC' \
+--header 'X-Request-ID: 84f240d1-cb45-410a-9661-b3d0f6dcab5d' \
+--header 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjdXN0b21lciIsImV4cCI6MjIxMTIxODU1NSwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImp0aSI6InZFSGlhUVRDbXRocWg3dHRubTE3d1MrS3Rpbz0iLCJjbGllbnRfaWQiOiJ3cml0ZXIiLCJzY29wZSI6WyJwcm9kdWN0OnJlYWQiLCJwcm9kdWN0OndyaXRlIl19.RMhYgu17NSf7V4xAfyRYATzzTx_9C6licrsGb6TW2it7d162hPOGoY9KVea8GyK8-aNqPLBQGd-RO-5Xk6msFgpFmr-PF94F68z15lXLyGmx56njNgy2WgZroN6VAjfdX8DA7iR_w1Wh-bMyqmvDGe2gZK7vud6vUddtDCbzZNZQf0J5xdXzQ0U-rlUUolDQKZvr5NTp5Y20n41fgpVjD1JrJbNYbYm1cPhe5e2_lEy5Iy6lUi79XlIgqHBSb_ZUbNOf-PrtX7c_-8LWvTKkXRNzjDlxnfjZZwq1EB8Nniteu5F9UKD0E5d4sohCko_eALzkHGe87Q8Q-LgLgNgbdQ'
+```
+
+```
+{
+"data": {
+"products": [
+{
+"code": "518168138464151",
+"name": "iphone XS MAX",
+"description": "Aerodynamic Wool Bench",
+"price": 16.83,
+"image": "http://lorempixel.com/g/640/200/fashion/",
+"discountRate": 3.5943667272,
+"promotion": "KillerDeal648426",
+"category": "1E2FF3BC",
+"brand": "Cty TNHH Khang",
+"source": "LAZADA"
+},
+{
+"code": "505058243666250",
+"name": "iphone XS MAX",
+"description": "Durable Leather Chair",
+"price": 18.47,
+"image": "http://lorempixel.com/320/200/food/",
+"discountRate": 19.0083286022,
+"promotion": "GreatSavings483173",
+"category": "A8B788FA",
+"brand": "Trung tâm Trinh",
+"source": "SHOPEE"
+},
+{
+"code": "105588825468703",
+"name": "iphone XS MAX",
+"description": "Gorgeous Concrete Shirt",
+"price": 49.23,
+"image": "http://lorempixel.com/g/720/348/nightlife/",
+"discountRate": 48.3366122691,
+"promotion": "GoodDiscount480511",
+"category": "A6242ED1",
+"brand": "Chi nhánh Hải",
+"source": "TIKI"
+}
+]
+},
+"meta": {
+"code": "200"
+}
+}
+```
+image::Logs.png[alt="Log from services"]

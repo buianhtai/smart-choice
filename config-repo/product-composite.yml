@@ -1,0 +1,29 @@
+---
+spring.profiles: docker
+
+server.port: 80
+
+server.error.include-message: always
+
+spring:
+  application.name: product-composite
+  kafka:
+    bootstrap-servers: kafka:29092
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+app:
+  auth-server: auth-server
+  clients:
+    TIKI: tiki/products
+    LAZADA: lazada/products
+    SHOPEE: shopee/products
+
+spring.security.oauth2.resourceserver.jwt.jwk-set-uri: http://${app.auth-server}/.well-known/jwks.json
+
+logging:
+  level:
+    root: INFO
+    com.ecom: DEBUG
+    org.springframework.web.server.adapter.HttpWebHandlerAdapter: TRACE
+

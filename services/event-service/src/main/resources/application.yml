@@ -1,0 +1,33 @@
+#app:
+#  auth-server: localhost:8080
+#  events:
+#    topic: event
+#  retry:
+#    max-times: 2
+#    max-duration: 5s
+#
+#server:
+#  port: 7001
+#server.error.include-message: always
+#debug: true
+#spring.kafka.bootstrap-servers: localhost:9092
+#spring:
+#  application.name: event-service
+#  kafka:
+#    producer:
+#      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#    consumer:
+#      value-deserializer: org.springframework.kafka.support.serializer.JsonSerializer
+#      key-deserializer: org.apache.kafka.common.serialization.StringSerializer
+#  cloud:
+#    function.definition: eventHandler
+#    stream:
+#      bindings:
+#        eventHandler-in-0.destination: ${app.events.topic}
+#        eventHandler-in-0.group: eventGroup
+#        eventHandler-in-0.consumer:
+#          value-deserializer: org.springframework.kafka.support.serializer.JsonSerializer
+#      default-binder: kafka
+#
+#

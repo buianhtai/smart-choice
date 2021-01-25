@@ -1,0 +1,10 @@
+---
+server.port: 80
+spring:
+  config:
+    activate:
+      on-profile: docker
+  application:
+    name: tiki
+
+

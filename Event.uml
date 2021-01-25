@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.nab.event.Event</OriginalElement>
+  <nodes>
+    <node x="259.0" y="0.0">com.nab.event.Event</node>
+    <node x="0.0" y="125.5">com.nab.event.IEventHandler</node>
+    <node x="492.00000000000006" y="103.0">com.nab.smartchoice.event.EventConsumer</node>
+    <node x="0.0" y="317.0">com.nab.smartchoice.event.SearchEventHandler</node>
+    <node x="250.0" y="273.0">com.nab.event.SearchEvent</node>
+    <node x="259.0" y="136.5">com.nab.event.AbstractEvent</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.nab.smartchoice.event.EventConsumer" target="com.nab.event.Event">
+      <point x="0.0" y="-60.0" />
+      <point x="620.0" y="78.0" />
+      <point x="436.5" y="78.0" />
+      <point x="71.0" y="26.5" />
+    </edge>
+    <edge source="com.nab.event.AbstractEvent" target="com.nab.event.Event">
+      <point x="0.0" y="-26.5" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="com.nab.smartchoice.event.SearchEventHandler" target="com.nab.event.IEventHandler">
+      <point x="0.0" y="-49.0" />
+      <point x="0.0" y="37.5" />
+    </edge>
+    <edge source="com.nab.event.SearchEvent" target="com.nab.event.AbstractEvent">
+      <point x="0.0" y="-93.0" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="com.nab.event.IEventHandler" target="com.nab.event.Event">
+      <point x="0.0" y="-37.5" />
+      <point x="115.0" y="78.0" />
+      <point x="294.5" y="78.0" />
+      <point x="-71.0" y="26.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="374.0" y="229.5" />
+  <SelectedNodes>
+    <node>com.nab.event.Event</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Properties</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

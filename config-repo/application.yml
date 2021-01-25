@@ -1,0 +1,25 @@
+---
+#debug: true
+spring.profiles: docker
+spring.kafka.bootstrap-servers: kafka:29092
+spring.data.mongodb.host: mongodb
+
+spring.data.mongodb:
+  host: mongodb
+  port: 27017
+  database: event-db
+
+
+app:
+  auth-server: auth-server
+  events:
+    topic: event
+  retry:
+    max-times: 2
+    max-duration: 5s
+
+logging:
+  level:
+    root: INFO
+    com.ecom: DEBUG
+    org.springframework.web.server.adapter.HttpWebHandlerAdapter: TRACE

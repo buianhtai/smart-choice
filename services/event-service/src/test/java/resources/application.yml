@@ -1,0 +1,19 @@
+app:
+  auth-server: auth-server
+  events:
+    topic: event
+  retry:
+    max-times: 2
+    max-duration: 5s
+spring:
+  application.name: event-service
+  cloud:
+    function.definition: eventHandler
+    stream:
+      bindings:
+        eventHandler-in-0.destination: ${app.events.topic}
+        eventHandler-in-0.group: eventGroup
+      default-binder: kafka
+      kafka:
+        binder:
+          replicationFactor: 1
