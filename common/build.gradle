@@ -1,7 +1,4 @@
 buildscript {
-	ext {
-		springBootVersion = '2.3.2.RELEASE'
-	}
 	repositories {
 		mavenCentral()
 	}
@@ -20,7 +17,7 @@ apply plugin: 'eclipse'
 
 group = 'com.nab'
 version = '1.0.0-SNAPSHOT'
-sourceCompatibility = 1.8
+sourceCompatibility = '11'
 
 
 configurations {

@@ -1,18 +1,12 @@
 package com.nab.exceptions;
 
-public class NotFoundException extends RuntimeException {
+public class NotFoundException extends SmartChoiceException {
+
     public NotFoundException() {
+        super(HousingErrors.NOT_FOUND_ERROR);
     }
 
     public NotFoundException(String message) {
-        super(message);
-    }
-
-    public NotFoundException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public NotFoundException(Throwable cause) {
-        super(cause);
+        super(HousingErrors.NOT_FOUND_ERROR, message);
     }
 }

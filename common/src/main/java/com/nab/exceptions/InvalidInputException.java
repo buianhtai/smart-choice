@@ -1,18 +1,12 @@
 package com.nab.exceptions;
 
-public class InvalidInputException extends RuntimeException {
+public class InvalidInputException extends SmartChoiceException {
+
     public InvalidInputException() {
+        super(HousingErrors.INVALID_INPUT_ERROR);
     }
 
     public InvalidInputException(String message) {
-        super(message);
-    }
-
-    public InvalidInputException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public InvalidInputException(Throwable cause) {
-        super(cause);
+        super(HousingErrors.INVALID_INPUT_ERROR, message);
     }
 }

@@ -1,15 +1,18 @@
 package com.nab.event;
 
-import com.nab.shared.DomainEvent;
-import java.util.UUID;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
+@EqualsAndHashCode(callSuper = true)
 @Builder
 @Data
-public class SearchEvent implements DomainEvent<SearchEvent> {
+@NoArgsConstructor
+@AllArgsConstructor
+public class SearchEvent extends AbstractEvent {
 
-    UUID eventId;
     String userName;
     String query;
 }
