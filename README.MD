@@ -1,12 +1,12 @@
 # Components structures
 1. Common
->Structure 
+>Structure
 ```sh
 └── com
     └── nab
         ├── constant : All constants values that can be used in the services
-        ├── domain : Object that can be used in the services 
-        │   ├── external : 
+        ├── domain : Object that can be used in the services
+        │   ├── external :
         │   └── product
         │       ├── model : Product model and Product AggreeGate
         │       └── repository
@@ -15,14 +15,14 @@
         ├── exceptions: Common exception
         ├── filter: Centralize Filter request can be use
         ├── http:
-        ├── mapper: Base mapper 
-        └── shared : Common class can be shared 
+        ├── mapper: Base mapper
+        └── shared : Common class can be shared
 ```
-- Mock-services
->Mock partner service such as *lazada, shopee, tiki*  
-- Services  
-1. Event Service
->Handle Events from Kafka.In this example every event will be store in `MongoDB` for late usage.Each `event` will have `event-handler` class accordingly.Below is event class diagram.  
+2. Mock-services
+>Mock partner service such as *lazada, shopee, tiki*
+3. Services
+    3.1. Event Service
+>Handle Events from Kafka.In this example every event will be store in `MongoDB` for late usage.Each `event` will have `event-handler` class accordingly.Below is event class diagram.
 
 >Event class diagram
 
@@ -44,14 +44,14 @@ Event service used Spring Cloud stream to simplyfiez the process
         consumeEvent-in-0.destination: ${app.events.topic}
         consumeEvent-in-0.group: eventGroup
 ```
-2.Product Composite service
+    3.2.Product Composite service
 
 ![Product Composite diagram](assets/images/Product_Diagram.png)
 
 
 
-- Spring Cloud  
---- Gateway  
+4. Spring Cloud  
+      4.1 Gateway
 >To comunicate the services and hide the outside.The configuration as below
 ```yml
 spring.cloud.gateway.routes:
@@ -66,7 +66,7 @@ spring.cloud.gateway.routes:
       - Path=/oauth/**
 ```
 
---- Authorization-Server
+    4.2 Authorization-Server
 >OAuth 2.0 Authorization Server.
 # Software usage
 - Spring Boot
@@ -90,9 +90,9 @@ or run step by step commands
 docker-compose build
 docker-compose up
 ```
-> It will take a long time as downloading docker images file 
+> It will take a long time as downloading docker images file
 > **zookeeper,kafka,mongdodb,openjdk:12.0.2**
-> Running unit tests on product-composite-service 
+> Running unit tests on product-composite-service
 > Create microservices images .. Below is some logs from the command (run.sh)
 ````sh
 Status: Downloaded newer image for confluentinc/cp-zookeeper:latest
@@ -109,7 +109,7 @@ Creating event-service     ... done
 Creating product-composite ... done
 Attaching to tiki, lazada, mongodb, shopee, auth-server, gateway, zookeeper, kafka, product-composite, event-service
 event-service        |  value.deserializer = class org.springframework.kafka.support.serializer.JsonDeserializer
-event-service        | 
+event-service        |
 event-service        | 2021-01-25 15:09:50.887  INFO 1 --- [pool-3-thread-1] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 2.6.0
 event-service        | 2021-01-25 15:09:50.887  INFO 1 --- [pool-3-thread-1] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: 62abe01bee039651
 event-service        | 2021-01-25 15:09:50.887  INFO 1 --- [pool-3-thread-1] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1611587390887
@@ -214,7 +214,7 @@ curl --location --request GET 'https://localhost:8443/api/v1/products?query=ipho
 
 3. Query the user search history
 ```sh
-   docker-compose exec mongodb mongo event-db --quiet --eval "db.events.find()"      
+   docker-compose exec mongodb mongo event-db --quiet --eval "db.events.find()"
 ```
 Sample Result
 ```sh
@@ -227,8 +227,8 @@ Sample Result
 - Apply *Kubernetes & Istio* as alternative deployment
 - Apply Grafana, Prometheus and Kiali ... for tracing and monitoring to easilier debug and scale.
 - Apply Grpc for internal call to get highly performant and scalable.
-- Convert from Spring boot to Quarkus to enhance the performace 
+- Convert from Spring boot to Quarkus to enhance the performace
 (CPU & Memory usage).
 - Do more testing & integration test on mock-service ,product-composite.
-- Store search result in `external system` such as DB/Redis cached 
+- Store search result in `external system` such as DB/Redis cached
 for better perfomance and reduce cost.
