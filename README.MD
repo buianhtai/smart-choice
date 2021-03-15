@@ -3,7 +3,7 @@
 >Structure
 ```sh
 └── com
-    └── nab
+    └── ms
         ├── constant : All constants values that can be used in the services
         ├── domain : Object that can be used in the services
         │   ├── external :
@@ -50,7 +50,7 @@ Event service used Spring Cloud stream to simplyfiez the process
 
 
 
-4. Spring Cloud  
+4. Spring Cloud
       4.1 Gateway
 >To comunicate the services and hide the outside.The configuration as below
 ```yml
@@ -218,9 +218,9 @@ curl --location --request GET 'https://localhost:8443/api/v1/products?query=ipho
 ```
 Sample Result
 ```sh
-{ "_id" : ObjectId("600e9823ed6a8753c9c0526f"), "event" : { "userName" : "customer", "query" : "iphone XS MAX", "_class" : "com.nab.event.SearchEvent" }, "_class" : "com.nab.smartchoice.persistence.EventEntity" }
-{ "_id" : ObjectId("600e9827ed6a8753c9c05270"), "event" : { "userName" : "customer", "query" : "iphone XS MAX", "_class" : "com.nab.event.SearchEvent" }, "_class" : "com.nab.smartchoice.persistence.EventEntity" }
-{ "_id" : ObjectId("600e9829ed6a8753c9c05271"), "event" : { "userName" : "customer", "query" : "iphone XS MAX", "_class" : "com.nab.event.SearchEvent" }, "_class" : "com.nab.smartchoice.persistence.EventEntity" }
+{ "_id" : ObjectId("600e9823ed6a8753c9c0526f"), "event" : { "userName" : "customer", "query" : "iphone XS MAX", "_class" : "com.ms.event.SearchEvent" }, "_class" : "com.ms.smartchoice.persistence.EventEntity" }
+{ "_id" : ObjectId("600e9827ed6a8753c9c05270"), "event" : { "userName" : "customer", "query" : "iphone XS MAX", "_class" : "com.ms.event.SearchEvent" }, "_class" : "com.ms.smartchoice.persistence.EventEntity" }
+{ "_id" : ObjectId("600e9829ed6a8753c9c05271"), "event" : { "userName" : "customer", "query" : "iphone XS MAX", "_class" : "com.ms.event.SearchEvent" }, "_class" : "com.ms.smartchoice.persistence.EventEntity" }
 ```
 
 ## TODO
